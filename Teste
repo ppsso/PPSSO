@@ -1,0 +1,145 @@
+1) Observe o trecho de código abaixo: int INDICE = 13, SOMA = 0, K = 0;
+Enquanto K < INDICE faça { K = K + 1; SOMA = SOMA + K; }
+Imprimir(SOMA);
+Ao final do processamento, qual será o valor da variável SOMA?
+91
+2) Dado a sequência de Fibonacci, onde se inicia por 0 e 1 e o próximo valor sempre será a soma dos 2 valores anteriores (exemplo: 0, 1, 1, 2, 3, 5, 8, 13, 21, 34...), escreva um programa na linguagem que desejar onde, informado um número, ele calcule a sequência de Fibonacci e retorne uma mensagem avisando se o número informado pertence ou não a sequência.
+
+IMPORTANTE: Esse número pode ser informado através de qualquer entrada de sua preferência ou pode ser previamente definido no código;
+typescript
+import * as readline from "readline";
+
+function fibonacciSequence(n: number): number[] {
+  const sequence: number[] = [0, 1];
+  for (let i = 2; i <= n; i++) {
+    sequence[i] = sequence[i - 1] + sequence[i - 2];
+  }
+  return sequence;
+}
+
+function isInFibonacciSequence(num: number): boolean {
+  let i = 1;
+  let fib = 1;
+  while (fib < num) {
+    fib = fibonacciSequence(i).pop()!;
+    i++;
+  }
+  return fib === num;
+}
+
+const rl = readline.createInterface({
+  input: process.stdin,
+  output: process.stdout,
+});
+
+rl.question(
+  "Digite um número para verificar se pertence à sequência de Fibonacci: ",
+  (numStr) => {
+    const num = parseInt(numStr);
+
+    if (isNaN(num)) {
+      console.log("Por favor, insira um número válido.");
+    } else {
+      const isInSequence = isInFibonacciSequence(num);
+      if (isInSequence) {
+        console.log(`${num} pertence à sequência de Fibonacci.`);
+      } else {
+        console.log(`${num} não pertence à sequência de Fibonacci.`);
+      }
+    }
+
+    rl.close();
+  },
+);
+```
+3) Dado um vetor que guarda o valor de faturamento diário de uma distribuidora, faça um programa, na linguagem que desejar, que calcule e retorne:
+• O menor valor de faturamento ocorrido em um dia do mês;
+• O maior valor de faturamento ocorrido em um dia do mês;
+• Número de dias no mês em que o valor de faturamento diário foi superior à média mensal.
+
+IMPORTANTE:
+a) Usar o json ou xml disponível como fonte dos dados do faturamento mensal;
+b) Podem existir dias sem faturamento, como nos finais de semana e feriados. Estes dias devem ser ignorados no cálculo da média;
+const faturamentoDiario = [/* insira os valores de faturamento diário aqui */];
+
+// Função para calcular o menor valor de faturamento
+function menorFaturamento(faturamento) {
+    return Math.min(...faturamento);
+}
+
+// Função para calcular o maior valor de faturamento
+function maiorFaturamento(faturamento) {
+    return Math.max(...faturamento);
+}
+
+// Função para calcular a média mensal de faturamento
+function mediaMensal(faturamento) {
+    const total = faturamento.reduce((acc, val) => acc + val, 0);
+    return total / faturamento.length;
+}
+
+// Função para contar os dias com faturamento acima da média mensal
+function diasAcimaDaMedia(faturamento) {
+    const media = mediaMensal(faturamento);
+    return faturamento.filter(val => val > media).length;
+}
+
+// Exemplo de uso
+const menor = menorFaturamento(faturamentoDiario);
+const maior = maiorFaturamento(faturamentoDiario);
+const diasAcimaMedia = diasAcimaDaMedia(faturamentoDiario);
+
+console.log(`Menor valor de faturamento: ${menor}`);
+console.log(`Maior valor de faturamento: ${maior}`);
+console.log(`Número de dias com faturamento acima da média: ${diasAcimaMedia}`);
+
+4) Dado o valor de faturamento mensal de uma distribuidora, detalhado por estado:
+• SP – R$67.836,43
+• RJ – R$36.678,66
+• MG – R$29.229,88
+• ES – R$27.165,48
+• Outros – R$19.849,53
+
+Escreva um programa na linguagem que desejar onde calcule o percentual de representação que cada estado teve dentro do valor total mensal da distribuidora. 
+// Valores de faturamento por estado
+const faturamento = {
+    SP: 67836.43,
+    RJ: 36678.66,
+    MG: 29229.88,
+    ES: 27165.48,
+    Outros: 19849.53
+};
+
+// Calcula o faturamento total
+const total = Object.values(faturamento).reduce((acc, val) => acc + val, 0);
+
+// Calcula o percentual de representação de cada estado
+const percentuais = {};
+for (const estado in faturamento) {
+    percentuais[estado] = ((faturamento[estado] / total) * 100).toFixed(2);
+}
+
+// Exibe os resultados
+for (const estado in percentuais) {
+    console.log(`Percentual de ${estado}: ${percentuais[estado]}%`);
+}
+
+5) Escreva um programa que inverta os caracteres de um string.
+
+IMPORTANTE:
+a) Essa string pode ser informada através de qualquer entrada de sua preferência ou pode ser previamente definida no código;
+b) Evite usar funções prontas, como, por exemplo, reverse;
+
+function inverterString(str) {
+    let stringInvertida = "";
+    for (let i = str.length - 1; i >= 0; i--) {
+        stringInvertida += str[i];
+    }
+    return stringInvertida;
+}
+
+// Exemplo de uso:
+let stringOriginal = "Olá, mundo!";
+let stringInvertida = inverterString(stringOriginal);
+console.log("String original:", stringOriginal);
+console.log("String invertida:", stringInvertida);
